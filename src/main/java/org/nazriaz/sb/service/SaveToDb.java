@@ -9,7 +9,7 @@ import org.nazriaz.sb.entity.ValCursDate;
 import org.nazriaz.sb.entity.Valute;
 import org.nazriaz.sb.repository.CursRepo;
 import org.nazriaz.sb.repository.ValCursDateRepo;
-import org.nazriaz.sb.repository.ValuteRepository;
+import org.nazriaz.sb.repository.ValuteRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ public class SaveToDb {
     @Autowired
     CursRepo cursRepo;
     @Autowired
-    ValuteRepository valuteRepository;
+    ValuteRepo valuteRepo;
     @Autowired
     ValCursDtoToValCursDate valCursDtoToValCursDate;
     @Autowired
@@ -43,15 +43,18 @@ public class SaveToDb {
                     .collect(Collectors.toList());
 
             List<Valute> valuteList = valCursDto.getValuteDtoList().stream().map(valuteDto ->
-                    valuteDtoToValut.toValute(valuteDto)).collect(Collectors.toList());
+                    valuteDtoToValut.toValute(valuteDto))
+                    .collect(Collectors.toList());
+
             valCursDateRepo.save(valCursDate);
-            valuteRepository.saveAll(valuteList);
+            valuteRepo.saveAll(valuteList);
             cursRepo.saveAll(cursList);
         }
     }
 
     public void del() {
+        cursRepo.deleteAll();
         valCursDateRepo.deleteAll();
-        valuteRepository.deleteAll();
+        valuteRepo.deleteAll();
     }
 }
