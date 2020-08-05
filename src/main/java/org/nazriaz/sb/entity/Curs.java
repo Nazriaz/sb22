@@ -15,14 +15,13 @@ public class Curs {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;
     Double value;
-    @ManyToOne()
-    ValCursDate valCursDate;
+    String date;
     @ManyToOne()
     Valute valute;
 
-    public Curs(Double value, ValCursDate valCursDate, Valute valute) {
+    public Curs(Double value, String date, Valute valute) {
         this.value = value;
-        this.valCursDate = valCursDate;
+        this.date = date;
         this.valute = valute;
     }
 }

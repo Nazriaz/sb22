@@ -24,10 +24,10 @@ public class MainController {
     @Autowired
     ValuteRepo valuteRepo;
 
-    @GetMapping
-    String get() {
-        return "HW";
-    }
+//    @GetMapping
+//    String get() {
+//        return "HW";
+//    }
 
     @GetMapping("/valute")
     Iterable<Valute> findAll() {

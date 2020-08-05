@@ -1,14 +1,11 @@
 package org.nazriaz.sb.service;
 
-import org.nazriaz.sb.converter.ValCursDtoToValCursDate;
 import org.nazriaz.sb.converter.ValuteDtoToCurs;
 import org.nazriaz.sb.converter.ValuteDtoToValut;
 import org.nazriaz.sb.dto.ValCursDto;
 import org.nazriaz.sb.entity.Curs;
-import org.nazriaz.sb.entity.ValCursDate;
 import org.nazriaz.sb.entity.Valute;
 import org.nazriaz.sb.repository.CursRepo;
-import org.nazriaz.sb.repository.ValCursDateRepo;
 import org.nazriaz.sb.repository.ValuteRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,26 +16,21 @@ import java.util.stream.Collectors;
 @Service
 public class SaveToDb {
     @Autowired
-    ValCursDateRepo valCursDateRepo;
-    @Autowired
     CursRepo cursRepo;
     @Autowired
     ValuteRepo valuteRepo;
-    @Autowired
-    ValCursDtoToValCursDate valCursDtoToValCursDate;
     @Autowired
     ValuteDtoToValut valuteDtoToValut;
     @Autowired
     ValuteDtoToCurs valuteDtoToCurs;
 
     public void save(ValCursDto valCursDto) throws InterruptedException {
-        if (valCursDateRepo.findById(valCursDto.getDate()).isEmpty()) {
-            ValCursDate valCursDate = valCursDtoToValCursDate.toValCursDate(valCursDto);
-
+        System.out.println(cursRepo.findByDate(valCursDto.getDate()));
+        if (cursRepo.findByDate(valCursDto.getDate()) == null) {
             List<Curs> cursList = valCursDto.getValuteDtoList().stream().map(valuteDto ->
                     valuteDtoToCurs.toCurs(
                             valuteDto,
-                            valCursDate,
+                            valCursDto.getDate(),
                             valuteDtoToValut.toValute(valuteDto)))
                     .collect(Collectors.toList());
 
@@ -46,7 +38,6 @@ public class SaveToDb {
                     valuteDtoToValut.toValute(valuteDto))
                     .collect(Collectors.toList());
 
-            valCursDateRepo.save(valCursDate);
             valuteRepo.saveAll(valuteList);
             cursRepo.saveAll(cursList);
         }
@@ -54,7 +45,6 @@ public class SaveToDb {
 
     public void del() {
         cursRepo.deleteAll();
-        valCursDateRepo.deleteAll();
         valuteRepo.deleteAll();
     }
 }
