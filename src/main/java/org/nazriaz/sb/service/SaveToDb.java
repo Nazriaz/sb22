@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Service
 public class SaveToDb {
     @Autowired
@@ -44,14 +45,11 @@ public class SaveToDb {
             List<Valute> valuteList = valCursDto.getValuteDtoList().stream().map(valuteDto ->
                     valuteDtoToValut.toValute(valuteDto)).collect(Collectors.toList());
             valCursDateRepo.save(valCursDate);
-//            valuteRepository.saveAll(valuteList);
+            valuteRepository.saveAll(valuteList);
             cursRepo.saveAll(cursList);
-//            valuteList.forEach(valute -> valuteRepository.save(valute));
-//            cursList.forEach(a->cursRepo.save(a));
-
-
         }
     }
+
     public void del() {
         valCursDateRepo.deleteAll();
         valuteRepository.deleteAll();

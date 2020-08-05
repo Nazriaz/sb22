@@ -17,7 +17,7 @@ public class Valute {
     String charCode;
     int nominal;
     String name;
-    @OneToMany(mappedBy = "valute",cascade= CascadeType.ALL)
+    @OneToMany(mappedBy = "valute")
     List<Curs> cursList;
 
     public Valute(String id, int numCode, String charCode, int nominal, String name) {

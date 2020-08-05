@@ -17,7 +17,7 @@ public class ValCursDate {
     @Id
     String date;
     String name;
-    @OneToMany(mappedBy = "valCursDate",cascade= CascadeType.ALL)
+    @OneToMany(mappedBy = "valCursDate")
     List<Curs> cursList;
 
     public ValCursDate(String date, String name) {

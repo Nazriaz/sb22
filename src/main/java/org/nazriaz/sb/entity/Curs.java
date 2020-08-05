@@ -15,9 +15,9 @@ public class Curs {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;
     Double value;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     ValCursDate valCursDate;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     Valute valute;
 
     public Curs(Double value, ValCursDate valCursDate, Valute valute) {
