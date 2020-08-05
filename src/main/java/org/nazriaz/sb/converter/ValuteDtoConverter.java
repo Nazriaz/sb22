@@ -1,4 +1,4 @@
-package org.nazriaz.sb.util;
+package org.nazriaz.sb.converter;
 
 import org.nazriaz.sb.dto.ValuteDto;
 import org.nazriaz.sb.entity.Valute;
@@ -11,7 +11,6 @@ public class ValuteDtoConverter {
                 valuteDto.getNumCode(),
                 valuteDto.getCharCode(),
                 valuteDto.getNominal(),
-                valuteDto.getName(),
-                valuteDto.getValue());
+                valuteDto.getName());
     }
 }

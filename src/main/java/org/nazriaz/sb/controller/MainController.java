@@ -3,7 +3,7 @@ package org.nazriaz.sb.controller;
 import org.nazriaz.sb.dto.ValCursDto;
 import org.nazriaz.sb.entity.Valute;
 import org.nazriaz.sb.repository.ValuteRepository;
-import org.nazriaz.sb.service.SAVE;
+import org.nazriaz.sb.service.SaveToDb;
 import org.nazriaz.sb.service.ValuteDtoSevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ import java.net.URL;
 @RequestMapping("/")
 public class MainController {
     @Autowired
-    SAVE save;
+    SaveToDb save;
     @Autowired
     ValuteRepository valuteRepository;
     @Autowired
@@ -45,11 +45,11 @@ public class MainController {
         return "Saved";
     }
     @GetMapping("/321")
-    String mmm() throws JAXBException, MalformedURLException {
+    String mmm() throws JAXBException, MalformedURLException, InterruptedException {
         JAXBContext context = JAXBContext.newInstance(ValCursDto.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
 //        ValCursDto valCursDto = (ValCursDto) unmarshaller.unmarshal(new URL("http://www.cbr.ru/scripts/XML_daily.asp"));
-        ValCursDto valCursDto = (ValCursDto) unmarshaller.unmarshal(new URL("http://www.cbr.ru/scripts/XML_daily.asp?date_req=04/08/2020"));
+        ValCursDto valCursDto = (ValCursDto) unmarshaller.unmarshal(new URL("http://www.cbr.ru/scripts/XML_daily.asp"));
         save.save(valCursDto);
 
         return "Saved2";
