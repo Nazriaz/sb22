@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Converter</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+    <script src="https://unpkg.com/vue-resource@1.5.1/dist/vue-resource.min.js"></script>
 </head>
 <body>
 <h3>Converter</h3>
@@ -21,7 +21,7 @@
         </div>
         <select v-model="selected">
             <option disabled value="">Выберите один из вариантов</option>
-            <option v-for="curs in curss">{{curs}}</option>
+            <option v-for="curs in curss">{{curs.name}}</option>
 <!--            <option>А</option>-->
 <!--            <option>Б</option>-->
 <!--            <option>В</option>-->
@@ -29,7 +29,7 @@
         <span>Выбрано: {{ selected }}</span>
         <select v-model="selected2">
             <option disabled value="">Выберите один из вариантов</option>
-            <option v-for="curs in curss">{{curs}}</option>
+            <option v-for="curs in curss">{{curs.name}}</option>
 <!--            <option>А</option>-->
 <!--            <option>Б</option>-->
 <!--            <option>В</option>-->

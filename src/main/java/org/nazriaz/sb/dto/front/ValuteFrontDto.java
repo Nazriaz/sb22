@@ -5,6 +5,10 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ValuteFront {
+public class ValuteFrontDto {
+    String id;
     String name;
+    String charCode;
+    int nominal;
+
 }

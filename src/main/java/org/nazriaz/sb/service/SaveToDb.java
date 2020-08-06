@@ -1,7 +1,6 @@
 package org.nazriaz.sb.service;
 
-import org.nazriaz.sb.converter.ValuteDtoToCurs;
-import org.nazriaz.sb.converter.ValuteDtoToValut;
+import org.nazriaz.sb.converter.ValuteDtoConverter;
 import org.nazriaz.sb.dto.ValCursDto;
 import org.nazriaz.sb.entity.Curs;
 import org.nazriaz.sb.entity.Valute;
@@ -20,22 +19,20 @@ public class SaveToDb {
     @Autowired
     ValuteRepo valuteRepo;
     @Autowired
-    ValuteDtoToValut valuteDtoToValut;
-    @Autowired
-    ValuteDtoToCurs valuteDtoToCurs;
+    ValuteDtoConverter valuteDtoConverter;
 
     public void save(ValCursDto valCursDto) throws InterruptedException {
         System.out.println(cursRepo.findByDate(valCursDto.getDate()));
         if (cursRepo.findByDate(valCursDto.getDate()) == null) {
             List<Curs> cursList = valCursDto.getValuteDtoList().stream().map(valuteDto ->
-                    valuteDtoToCurs.toCurs(
+                    valuteDtoConverter.toCurs(
                             valuteDto,
                             valCursDto.getDate(),
-                            valuteDtoToValut.toValute(valuteDto)))
+                            valuteDtoConverter.toValute(valuteDto)))
                     .collect(Collectors.toList());
 
             List<Valute> valuteList = valCursDto.getValuteDtoList().stream().map(valuteDto ->
-                    valuteDtoToValut.toValute(valuteDto))
+                    valuteDtoConverter.toValute(valuteDto))
                     .collect(Collectors.toList());
 
             valuteRepo.saveAll(valuteList);

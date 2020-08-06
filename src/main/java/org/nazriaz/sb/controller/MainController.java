@@ -1,13 +1,11 @@
 package org.nazriaz.sb.controller;
 
-import org.nazriaz.sb.converter.ValuteDtoToValut;
 import org.nazriaz.sb.dto.ValCursDto;
-import org.nazriaz.sb.dto.ValuteDto;
-import org.nazriaz.sb.dto.front.ValuteFront;
-import org.nazriaz.sb.entity.Curs;
+import org.nazriaz.sb.dto.front.ValuteFrontDto;
 import org.nazriaz.sb.entity.Valute;
 import org.nazriaz.sb.repository.ValuteRepo;
 import org.nazriaz.sb.service.SaveToDb;
+import org.nazriaz.sb.service.front.ValuteFrontDtoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +17,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collections;
 
 @RestController
 @RequestMapping("/")
@@ -29,7 +26,7 @@ public class MainController {
     @Autowired
     ValuteRepo valuteRepo;
     @Autowired
-    ValuteDtoToValut valuteDtoToValut;
+    ValuteFrontDtoService valuteFrontDtoService;
 
 //    @GetMapping
 //    String get() {
@@ -62,9 +59,14 @@ public class MainController {
         save.save(valCursDto);
         return "Saved " + date;
     }
+
     @GetMapping("/get")
-    ValuteFront getOne(){
-        return new ValuteFront("JOPA");
+    ValuteFrontDto getOne() {
+        return valuteFrontDtoService.findById("R01235");
+    }
+    @GetMapping("/findall")
+    Iterable<ValuteFrontDto> getAll(){
+        return valuteFrontDtoService.findAll();
     }
 
     @GetMapping("/666")
