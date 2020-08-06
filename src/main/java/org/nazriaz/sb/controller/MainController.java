@@ -1,6 +1,10 @@
 package org.nazriaz.sb.controller;
 
+import org.nazriaz.sb.converter.ValuteDtoToValut;
 import org.nazriaz.sb.dto.ValCursDto;
+import org.nazriaz.sb.dto.ValuteDto;
+import org.nazriaz.sb.dto.front.ValuteFront;
+import org.nazriaz.sb.entity.Curs;
 import org.nazriaz.sb.entity.Valute;
 import org.nazriaz.sb.repository.ValuteRepo;
 import org.nazriaz.sb.service.SaveToDb;
@@ -15,6 +19,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 
 @RestController
 @RequestMapping("/")
@@ -23,6 +28,8 @@ public class MainController {
     SaveToDb save;
     @Autowired
     ValuteRepo valuteRepo;
+    @Autowired
+    ValuteDtoToValut valuteDtoToValut;
 
 //    @GetMapping
 //    String get() {
@@ -54,6 +61,10 @@ public class MainController {
         }
         save.save(valCursDto);
         return "Saved " + date;
+    }
+    @GetMapping("/get")
+    ValuteFront getOne(){
+        return new ValuteFront("JOPA");
     }
 
     @GetMapping("/666")

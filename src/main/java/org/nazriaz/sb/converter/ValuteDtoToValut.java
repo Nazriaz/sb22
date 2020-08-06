@@ -16,4 +16,15 @@ public class ValuteDtoToValut {
                 valuteDto.getNominal(),
                 valuteDto.getName());
     }
+
+    public ValuteDto toValuteDto(Valute valute) {
+        if (valute == null) {
+            return null;
+        }
+        return new ValuteDto(valute.getId(),
+                valute.getNumCode(),
+                valute.getCharCode(),
+                valute.getNominal(),
+                valute.getName(),null);
+    }
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.xml.bind.annotation.*;
 import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
