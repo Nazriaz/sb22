@@ -4,8 +4,8 @@ Vue.component('valute-row', {
     template: '<div><>{{valute.name}}</div>'
 });
 Vue.component('valutes-list',{
-    props: ['messages'],
-    template: '<div><valute-row v-for="valute in valutes" :valute="valute"/></div>'
+    props: ['valutes'],
+    template: '<div><valute-row v-for="valute in valutes" :valute="valute"/></div>',
     created: function () {
         messageApi.get().then(result=>
         result.json().then(data=>

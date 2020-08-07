@@ -6,9 +6,6 @@ import org.nazriaz.sb.service.ValuteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class ValuteFrontDtoService {
     @Autowired
@@ -22,8 +19,6 @@ public class ValuteFrontDtoService {
     }
 
     public Iterable<ValuteFrontDto> findAll() {
-        List<ValuteFrontDto> valuteFrontDtoList = new ArrayList<>();
-        valuteService.findAll().forEach(valute -> valuteFrontDtoList.add(valuteConverter.toValuteFrontDto(valute)));
-        return valuteFrontDtoList;
+        return valuteConverter.toValuteFrontDto(valuteService.findAll());
     }
 }
