@@ -7,39 +7,13 @@
     <script src="https://unpkg.com/vue-resource@1.5.1/dist/vue-resource.min.js"></script>
 </head>
 <body>
-<h3>Converter</h3>
+<h3>Converterr</h3>
 <div id="app">
-<!--    {{ curss }}-->
-<!--    вывод элементов из массива-->
-<!--    <div>-->
-<!--        <button v-for="curs in curss">{{curs}}</button>-->
-        <button @click="input()">123</button>
-<!--    </div>-->
-    <div>
-        <div>
-            <span>Выберите валюту для перевода из</span>
-        </div>
-        <select v-model="selected">
-            <option disabled value="">Выберите один из вариантов</option>
-            <option v-for="curs in curss">{{curs.name}}</option>
-<!--            <option>А</option>-->
-<!--            <option>Б</option>-->
-<!--            <option>В</option>-->
-        </select>
-        <span>Выбрано: {{ selected }}</span>
-        <select v-model="selected2">
-            <option disabled value="">Выберите один из вариантов</option>
-            <option v-for="curs in curss">{{curs.name}}</option>
-<!--            <option>А</option>-->
-<!--            <option>Б</option>-->
-<!--            <option>В</option>-->
-        </select>
-        <span>Выбрано: {{ selected2 }}</span>
-    </div>
-    <div>
-        <input type="text" v-mode="resoult">
-        {{resoult}}
-    </div>
+    <div><valutes-list :valutes="valutes" :input2="input1"/></div>
+    <div><valutes-list :valutes="valutes" :input2="input2"/></div>
+    <div><calc :valute1="selected1" :valute2="selected2"></calc></div>
+    selected1 = {{selected1}}
+    selected2 = {{selected2}}
 </div>
 <script src="js/main.js"></script>
 </body>

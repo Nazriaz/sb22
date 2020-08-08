@@ -1,16 +1,16 @@
 package org.nazriaz.sb.controller;
 
 import org.nazriaz.sb.dto.ValCursDto;
+import org.nazriaz.sb.dto.front.CursDto;
 import org.nazriaz.sb.dto.front.ValuteFrontDto;
+import org.nazriaz.sb.entity.Curs;
 import org.nazriaz.sb.entity.Valute;
 import org.nazriaz.sb.repository.ValuteRepo;
+import org.nazriaz.sb.service.CursService;
 import org.nazriaz.sb.service.SaveToDb;
 import org.nazriaz.sb.service.front.ValuteFrontDtoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -27,6 +27,9 @@ public class MainController {
     ValuteRepo valuteRepo;
     @Autowired
     ValuteFrontDtoService valuteFrontDtoService;
+    @Autowired
+    CursService cursService;
+
 
 //    @GetMapping
 //    String get() {
@@ -64,9 +67,13 @@ public class MainController {
     ValuteFrontDto getOne() {
         return valuteFrontDtoService.findById("R01235");
     }
-    @GetMapping("/findall")
+    @GetMapping("/valutes")
     Iterable<ValuteFrontDto> getAll(){
         return valuteFrontDtoService.findAll();
+    }
+    @GetMapping("/valutes/{id}")
+    CursDto getCurs(@PathVariable String id){
+        return cursService.findCursDtoByValuteId(id);
     }
 
     @GetMapping("/666")
