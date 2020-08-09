@@ -1,4 +1,5 @@
 var API = Vue.resource('/valutes{/id}');
+var APIhistory = Vue.resource('/history{/id}');
 Vue.component('valutes-list', {
     props: ['valutes', 'input2'],
     data: function () {
@@ -24,7 +25,7 @@ Vue.component('valutes-list', {
     }
 });
 Vue.component('calc', {
-    props: ['valute1', 'valute2'],
+    props: ['valute1', 'valute2', 'history-arr'],
     data: function () {
         return {
             amount: 1,
@@ -48,9 +49,39 @@ Vue.component('calc', {
                 var nom1 = this.valute1FromServer.nominal;
                 var nom2 = this.valute2FromServer.nominal;
                 this.valute3 = ((curs1 * nom2) * this.amount) / (nom1 * curs2);
-                console.log(values)
+                this.send(this.valute1FromServer.valuteName, this.valute2FromServer.valuteName, this.amount, this.valute3, this.valute1FromServer.date);
             })
-        }
+        },
+        send: function (val1, val2, am1, am2, dat) {
+            var item = {valuteFrom: val1, valuteTo: val2, amountFrom: am1, amountTo: am2, date: dat};
+            APIhistory.save(item).then(this.historyArr.push(item));
+        },
+    }
+});
+Vue.component('history', {
+    props: ['history-arr'],
+    template: '<div>' +
+        '<table>' +
+        '<tr >' +
+        '<th v-bind:style="{ border: \'2px solid gray\'}">valuteFrom</th>' +
+        '<th v-bind:style="{ border: \'2px solid gray\'}">valuteTo</th>' +
+        '<th v-bind:style="{ border: \'2px solid gray\'}">amountFrom</th>' +
+        '<th v-bind:style="{ border: \'2px solid gray\'}">amountTo</th>' +
+        '<th v-bind:style="{ border: \'2px solid gray\'}">date</th>' +
+        '</tr v-bind:style="{ border: \'2px solid gray\'}">' +
+        '<tr v-for="history in historyArr">' +
+        '<th v-bind:style="{ border: \'2px solid gray\'}">{{history.valuteFrom}}</th>' +
+        '<th v-bind:style="{ border: \'2px solid gray\'}">{{history.valuteTo}}</th>' +
+        '<th v-bind:style="{ border: \'2px solid gray\'}">{{history.amountFrom}}</th>' +
+        '<th v-bind:style="{ border: \'2px solid gray\'}">{{history.amountTo}}</th>' +
+        '<th v-bind:style="{ border: \'2px solid gray\'}">{{history.date}}</th>' +
+        '</tr>' +
+        '</table>' +
+        '</div>' +
+        '</div>',
+    created: function () {
+        APIhistory.get().then(result =>
+            result.json().then(data => data.forEach(historyRow => this.historyArr.push(historyRow))))
     }
 });
 
@@ -58,6 +89,7 @@ var app = new Vue({
     el: '#app',
     data: {
         valutes: [],
+        historyArr: [],
         selected1: 'selected1',
         selected2: 'selected2',
         resoult: 'JOPA'

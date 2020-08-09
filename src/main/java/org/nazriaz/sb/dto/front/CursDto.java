@@ -9,5 +9,6 @@ public class CursDto {
     Integer nominal;
     Double value;
     String date;
-    String valute;
+    String valuteId;
+    String valuteName;
 }

@@ -21,7 +21,7 @@ public class SaveToDb {
     @Autowired
     ValuteDtoConverter valuteDtoConverter;
 
-    public void save(ValCursDto valCursDto) throws InterruptedException {
+    public void save(ValCursDto valCursDto){
         System.out.println(cursRepo.findByDate(valCursDto.getDate()));
         if (cursRepo.findByDate(valCursDto.getDate()) == null) {
             List<Curs> cursList = valCursDto.getValuteDtoList().stream().map(valuteDto ->

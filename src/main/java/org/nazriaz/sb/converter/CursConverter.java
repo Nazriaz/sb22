@@ -11,6 +11,7 @@ public class CursConverter {
                 curs.getValute().getNominal(),
                 curs.getValue(),
                 curs.getDate(),
-                curs.getValute().getId());
+                curs.getValute().getId(),
+                curs.getValute().getName());
     }
 }

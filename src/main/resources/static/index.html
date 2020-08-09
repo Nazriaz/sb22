@@ -11,7 +11,10 @@
 <div id="app">
     <div><valutes-list :valutes="valutes" :input2="input1"/></div>
     <div><valutes-list :valutes="valutes" :input2="input2"/></div>
-    <div><calc :valute1="selected1" :valute2="selected2"></calc></div>
+    <div><calc :valute1="selected1" :valute2="selected2" :history-arr="historyArr"></calc></div>
+    <div><history :history-arr="historyArr"></history></div>
+
+<!--    <div>{{valute1-from-server}}</div>-->
 </div>
 <script src="js/main.js"></script>
 </body>
