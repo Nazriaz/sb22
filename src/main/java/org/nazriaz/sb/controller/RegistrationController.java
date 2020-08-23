@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/registration")
+@RequestMapping("/auth")
 public class RegistrationController {
     @Autowired
     ApplicationUserDetailsService applicationUserDetailsService;
 
-    @GetMapping
+    @GetMapping("/registration")
     public String get() {
-        return "registration.html";
+        return "registration";
     }
 
-    @PostMapping
+    @PostMapping("/registration")
     public String post(@RequestParam String username, @RequestParam String password) {
         if (applicationUserDetailsService.registerNewApplicationUser(username, password).equals("OK")) {
             return "redirect:login";
@@ -27,5 +27,9 @@ public class RegistrationController {
         else {
             return "redirect:registration";
         }
+    }
+    @GetMapping("/login")
+    public String login(){
+        return "login";
     }
 }

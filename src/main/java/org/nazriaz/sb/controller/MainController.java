@@ -10,14 +10,13 @@ import org.nazriaz.sb.service.SaveToDb;
 import org.nazriaz.sb.service.ValuteService;
 import org.nazriaz.sb.util.UtilXML;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -25,7 +24,7 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping("/")
 public class MainController {
     @Autowired
-    SaveToDb save;
+    SaveToDb saveToDb;
     @Autowired
     ValuteRepo valuteRepo;
     @Autowired
@@ -47,41 +46,14 @@ public class MainController {
         String stringDate = dtf.format(now);
         if (!cursService.cursForDateExists(stringDate)) {
             ValCursDto valCursDto = utilXML.getData(stringDate);
-                valCursDto.setDate(stringDate);//связанно с выходными
-                try {
-                    save.save(valCursDto);
-                    return "ok";
-                } catch (Exception ex) {
-                    return "fail";
-                }
+            valCursDto.setDate(stringDate);//связанно с выходными
+            try {
+                saveToDb.save(valCursDto);
+                return "ok";
+            } catch (Exception ex) {
+                return "fail";
             }
-        else return "already in base";
-    }
-
-    @GetMapping("/front")
-    String requestFromFront() {
-        LocalDate date = LocalDate.now();
-
-
-        return null;
-    }
-
-    @GetMapping("/save")
-    String sss(@RequestParam String date) throws JAXBException, InterruptedException, MalformedURLException {
-        JAXBContext context = JAXBContext.newInstance(ValCursDto.class);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        URL url = new URL("http://www.cbr.ru/scripts/XML_daily.asp" + "?date_req=" + date);
-        ValCursDto valCursDto = (ValCursDto) unmarshaller.unmarshal(url);
-        if (valCursDto.getDate() == null) {
-            return "Can't find Curs for " + date;
-        }
-        try {
-            save.save(valCursDto);
-            return "Saved " + date;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "Failed to save";
+        } else return "already in base";
     }
 
     @GetMapping("/valutes")
@@ -90,7 +62,7 @@ public class MainController {
         return valuteService.findAllValuteFrontDto();
     }
 
-    @GetMapping("/valutes/{id}")
+    @GetMapping("/curses/{id}")
     CursDto getCurs(@PathVariable String id) throws JAXBException, MalformedURLException {
         saveTodayCursesToDb();
         return cursService.findCursDtoByValuteId(id);
@@ -98,7 +70,7 @@ public class MainController {
 
     @GetMapping("/666")
     String del() {
-        save.del();
+        saveToDb.del();
         return "Deleted";
     }
 

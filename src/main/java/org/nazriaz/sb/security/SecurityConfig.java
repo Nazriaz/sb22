@@ -20,11 +20,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/test","/registration").permitAll()
+                .antMatchers("/auth/registration").permitAll()
+                .antMatchers().permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()/*.loginPage("login")*/.loginProcessingUrl("/login")
-        .and().logout().logoutUrl("/logout").deleteCookies("JSESSIONID").logoutSuccessUrl("/login");
+                .formLogin().loginPage("/auth/login").permitAll().defaultSuccessUrl("/")
+        .and().logout().logoutUrl("/logout").deleteCookies("JSESSIONID").logoutSuccessUrl("/auth/login");
     }
 
     @Override

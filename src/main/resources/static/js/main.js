@@ -1,4 +1,5 @@
-var API = Vue.resource('/valutes{/id}');
+var valuteAPI = Vue.resource('/valutes');
+var cursesAPI = Vue.resource('/curses{/id}');
 var APIhistory = Vue.resource('/history{/id}');
 Vue.component('valutes-list', {
     props: ['valutes', 'input2'],
@@ -14,7 +15,7 @@ Vue.component('valutes-list', {
         '</select>' +
         '</div>',
     created: function () {
-        API.get().then(result =>
+        valuteAPI.get().then(result =>
             result.json().then(data =>
                 data.forEach(valute => this.valutes.push(valute))))
     },
@@ -41,14 +42,15 @@ Vue.component('calc', {
         '</div>',
     methods: {
         calc: function () {
-            const promis1 = API.get({id: this.valute1}).then(resoult => resoult.json().then(res => this.valute1FromServer = res));
-            const promis2 = API.get({id: this.valute2}).then(resoult => resoult.json().then(res => this.valute2FromServer = res));
+            const promis1 = cursesAPI.get({id: this.valute1}).then(resoult => resoult.json().then(res => this.valute1FromServer = res));
+            const promis2 = cursesAPI.get({id: this.valute2}).then(resoult => resoult.json().then(res => this.valute2FromServer = res));
             Promise.all([promis1, promis2]).then(values => {
                 var curs1 = this.valute1FromServer.value;
                 var curs2 = this.valute2FromServer.value;
                 var nom1 = this.valute1FromServer.nominal;
                 var nom2 = this.valute2FromServer.nominal;
                 this.valute3 = ((curs1 * nom2) * this.amount) / (nom1 * curs2);
+                this.valute3=Math.round(this.valute3 * 10000) / 10000;
                 this.send(this.valute1FromServer.valuteName, this.valute2FromServer.valuteName, this.amount, this.valute3, this.valute1FromServer.date);
             })
         },
@@ -96,7 +98,7 @@ var app = new Vue({
     },
     methods: {
         input: function () {
-            API.get().then(resoult => {
+            valuteAPI.get().then(resoult => {
                     this.curss = resoult.body;
                     console.log(resoult)
                 }
