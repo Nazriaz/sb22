@@ -21,9 +21,8 @@ public class SaveToDb {
     @Autowired
     ValuteDtoConverter valuteDtoConverter;
 
-    public void save(ValCursDto valCursDto){
-        System.out.println(cursRepo.findByDate(valCursDto.getDate()));
-        if (cursRepo.findByDate(valCursDto.getDate()) == null) {
+    public void save(ValCursDto valCursDto) throws Exception {
+        if (cursRepo.findFirstByDate(valCursDto.getDate()) == null) {
             List<Curs> cursList = valCursDto.getValuteDtoList().stream().map(valuteDto ->
                     valuteDtoConverter.toCurs(
                             valuteDto,
@@ -38,6 +37,12 @@ public class SaveToDb {
             valuteRepo.saveAll(valuteList);
             cursRepo.saveAll(cursList);
         }
+        else {
+            System.out.println("JOPA v" + this.getClass().getName());
+            throw new Exception();
+
+        }
+
     }
 
     public void del() {

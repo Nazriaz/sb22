@@ -7,6 +7,11 @@
     <script src="https://unpkg.com/vue-resource@1.5.1/dist/vue-resource.min.js"></script>
 </head>
 <body>
+<div class="container">
+    <form class="form-signin" method="get" action="/logout">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">logout</button>
+    </form>
+</div>
 <h3>Converterr</h3>
 <div id="app">
     <div><valutes-list :valutes="valutes" :input2="input1"/></div>
@@ -14,7 +19,6 @@
     <div><calc :valute1="selected1" :valute2="selected2" :history-arr="historyArr"></calc></div>
     <div><history :history-arr="historyArr"></history></div>
 
-<!--    <div>{{valute1-from-server}}</div>-->
 </div>
 <script src="js/main.js"></script>
 </body>

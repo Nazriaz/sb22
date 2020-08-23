@@ -22,4 +22,10 @@ public class CursService {
     public CursDto findCursDtoByValuteId(String id){
         return cursConverter.toCursDto(findCursByValuteId(id));
     }
+    public Curs findCursByValuteIdAndDate(String id,String date){
+        return cursRepo.findByDateAndValute(date,valuteRepo.findById(id).get());
+    }
+    public boolean cursForDateExists(String date){
+        return cursRepo.findFirstByDate(date)!=null;
+    }
 }
