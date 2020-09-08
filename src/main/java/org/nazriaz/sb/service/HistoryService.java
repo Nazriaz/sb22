@@ -2,25 +2,25 @@ package org.nazriaz.sb.service;
 
 import org.nazriaz.sb.entity.History;
 import org.nazriaz.sb.repository.HistoryRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+
 @Service
 public class HistoryService {
-    @Autowired
+    private final
     HistoryRepo historyRepo;
 
-    public List<History> findAll() {
-        return StreamSupport.stream(historyRepo.findAll().spliterator(), false).collect(Collectors.toList());
+    public HistoryService(HistoryRepo historyRepo) {
+        this.historyRepo = historyRepo;
     }
-    public String save(History history){
-        if (history==null){
-            return "Null History";
-        }
+
+    public List<History> findAll() {
+        return new ArrayList<>(historyRepo.findAll());
+    }
+
+    public void save(History history) {
         historyRepo.save(history);
-        return "OK";
     }
 }

@@ -28,6 +28,4 @@ public class ValuteDtoConverter {
                 valuteDto.getNominal(),
                 valuteDto.getName());
     }
-
-
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @XmlRootElement(name = "ValCurs")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ValCursDto {
+public class XmlDto {
     @XmlAttribute(name = "Date")
     String date;
     @XmlAttribute(name = "name")

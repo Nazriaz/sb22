@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Collection;
+
 @Entity(name = "usr")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,6 +20,7 @@ public class ApplicationUser implements UserDetails {
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

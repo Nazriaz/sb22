@@ -10,5 +10,4 @@ public class ValuteFrontDto {
     String name;
     String charCode;
     int nominal;
-
 }

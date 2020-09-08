@@ -10,10 +10,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
+    private final
     ApplicationUserDetailsService applicationUserDetailsService;
-    @Autowired
+    private final
     PasswordEncoder passwordEncoder;
+
+    public SecurityConfig(ApplicationUserDetailsService applicationUserDetailsService, PasswordEncoder passwordEncoder) {
+        this.applicationUserDetailsService = applicationUserDetailsService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -24,8 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers().permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/auth/login").permitAll().defaultSuccessUrl("/")
-        .and().logout().logoutUrl("/logout").deleteCookies("JSESSIONID").logoutSuccessUrl("/auth/login");
+                .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/")
+                .and().logout().logoutUrl("/logout").deleteCookies("JSESSIONID").logoutSuccessUrl("/login");
     }
 
     @Override

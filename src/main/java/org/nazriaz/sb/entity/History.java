@@ -19,5 +19,4 @@ public class History {
     String amountFrom;
     String amountTo;
     String date;
-//    Curs curs;
 }

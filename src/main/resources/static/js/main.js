@@ -36,7 +36,7 @@ Vue.component('calc', {
         }
     },
     template: '<div>' +
-        '<div><button @click="calc">KNOPKA</button></div>' +
+        '<div><button @click="calc">CONVERT</button></div>' +
         '<div><input v-model="amount"></div>' +
         '<div>RESULT = {{valute3}}</div>' +
         '</div>',

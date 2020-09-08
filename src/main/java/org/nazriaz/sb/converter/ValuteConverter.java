@@ -23,7 +23,7 @@ public class ValuteConverter {
                 valute.getName(), null);
     }
 
-    public ValuteFrontDto toValuteFrontDto(Valute valute) {
+    private ValuteFrontDto toValuteFrontDto(Valute valute) {
         if (valute == null) {
             return null;
         }
